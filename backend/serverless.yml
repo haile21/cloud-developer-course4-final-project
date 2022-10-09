@@ -1,7 +1,8 @@
-# TODO: Change the name of the org 
-org: sudkul
-app: serverless-todo-app
-service: serverless-todo-app
+# TODO: Change the name of the org =>i have changed the name from sudkul to haile
+#org: haile
+#app: serverless-todo-app
+service:
+  name: serverless-todo-app-haile
 
 plugins:
   - serverless-webpack
@@ -48,7 +49,7 @@ functions:
     handler: src/lambda/auth/auth0Authorizer.handler
 
   # TODO: Configure this function - 
-  # Provide iamRoleStatements property for performing Actions on DynamoDB
+  # Provide iamRoleStatements property for performing Actions on DynamoDB=> done -haile
   GetTodos:
     handler: src/lambda/http/getTodos.handler
     events:
@@ -57,11 +58,22 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: "Allow"
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"      
 
   # TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 
   # To refer to an AWS resource defined in the "Resources" section, you can use "Resource: !GetAtt <resource-name>.Arn"
-  # To validate incoming HTTP requests, we have provided the request schemas in function definition below. 
+  # To validate incoming HTTP requests, we have provided the request schemas in function definition below. ==> DONE:haile
   CreateTodo:
     handler: src/lambda/http/createTodo.handler
     events:
@@ -72,7 +84,18 @@ functions:
           authorizer: Auth
           request:
             schemas:
-              application/json: ${file(models/create-todo-model.json)}
+              application/json: ${file(models/create-todo-model.json)}  #to see 
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: "Allow"
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"          
 
   # TODO: Configure this function
   # Provide property for setting up CORS, Authorizer, iamRoleStatements, and request schemas
