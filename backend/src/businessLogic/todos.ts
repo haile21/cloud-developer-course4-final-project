@@ -2,7 +2,11 @@ import * as uuid from 'uuid';
 import * as AWS from 'aws-sdk';
 import { TodoAccess } from '../dataLayer/todoAccess';
 import { getUserId } from '../utils/getJwt';
-import { TodoItem, TodoCreate, TodoUpdate } from '../models/Todo.d';
+import { TodoItem} from '../models/TodoItem';
+import { TodoUpdate } from '../models/TodoUpdate';
+import { TodoCreate } from '../models/TodoCreate';
+
+
 
 const todoAccess = new TodoAccess();
 
