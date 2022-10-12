@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk';
-import {captureAWS} from "aws-xray-sdk-core";
+//import {captureAWS} from "aws-xray-sdk-core";
 //import * as AWSXRay from 'aws-xray-sdk';
+import AWSXRay from 'aws-xray-sdk-core';
 import { createLogger } from '../utils/logger';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { TodoItem } from '../models/TodoItem';
@@ -8,7 +9,7 @@ import { TodoUpdate } from '../models/TodoUpdate';
 
 
 //const XAWS = AWSXRay.captureAWS(AWS);
-const XAWS = captureAWS(AWS);
+const XAWS = AWSXRay.captureAWS(AWS);
 
 const logger = createLogger('todoAccess');
 
