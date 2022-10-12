@@ -73,7 +73,7 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
   // Auth0 certificate to verify JWT token signature
   // Auth0: Advanced Settings: Endpoints: JSON Web Key Set
   const client = JwksRsa({ jwksUri: 'https://dev-ovwchvz2.us.auth0.com/.well-known/jwks.json' });
-  const kid = 'fPEY0YSKolQ4vzJd4uh5cdJhEq6i81D7'; 
+  const kid = '232dL6ORq5wbMj9EdGRXn'; 
   const certSigningKey = (await client.getSigningKeyAsync(kid)) as CertSigningKey;
 
   return verify(token, certSigningKey.publicKey, { algorithms: ['RS256'] }) as JwtPayload;
