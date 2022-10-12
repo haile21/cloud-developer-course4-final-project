@@ -15,7 +15,7 @@ const logger = createLogger('auth')
 //const jwksClient = new JwksClient(jwksUrl);
 
 
-const logger = createLogger('auth');
+//const logger = createLogger('auth');
 
 export const handler = async (
   event: APIGatewayTokenAuthorizerEvent
@@ -73,7 +73,7 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
   // Auth0 certificate to verify JWT token signature
   // Auth0: Advanced Settings: Endpoints: JSON Web Key Set
   const client = JwksRsa({ jwksUri: 'https://dev-ovwchvz2.us.auth0.com/.well-known/jwks.json' });
-  const kid = 'vX2RD76pD-Rv2L6IHvW3s'; 
+  const kid = 'fPEY0YSKolQ4vzJd4uh5cdJhEq6i81D7'; 
   const certSigningKey = (await client.getSigningKeyAsync(kid)) as CertSigningKey;
 
   return verify(token, certSigningKey.publicKey, { algorithms: ['RS256'] }) as JwtPayload;
