@@ -1,17 +1,20 @@
 import * as AWS from 'aws-sdk';
-import * as AWSXRay from 'aws-xray-sdk';
+import {captureAWS} from "aws-xray-sdk-core";
+//import * as AWSXRay from 'aws-xray-sdk';
 import { createLogger } from '../utils/logger';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { TodoItem } from '../models/TodoItem';
 import { TodoUpdate } from '../models/TodoUpdate';
 
 
-const XAWS = AWSXRay.captureAWS(AWS);
+//const XAWS = AWSXRay.captureAWS(AWS);
+const XAWS = captureAWS(AWS);
+
 const logger = createLogger('todoAccess');
 
 export class TodoAccess {
   constructor(
-    private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
+    private readonly docClient: DocumentClient= new XAWS.DynamoDB.DocumentClient(),
     private readonly todosTable = process.env.TODOS_TABLE
   ) {}
 
